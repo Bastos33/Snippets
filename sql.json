@@ -1,0 +1,46 @@
+{
+    "CTE Base": {
+        "prefix": "cte",
+        "body": [
+            "WITH base AS (",
+            "    SELECT",
+            "        /* Campos da base */",
+            "        ${1:coluna}",
+            "    FROM ${2:tabela}",
+            "    WHERE 1=1",
+            ")",
+            ", cte2 AS (",
+            "    SELECT",
+            "        *",
+            "    FROM base",
+            ")",
+            "SELECT *",
+            "FROM cte2;"
+        ],
+        "description": "Modelo de CTE base + CTE derivada"
+    },
+
+    "CTE Analiticas": {
+        "prefix": "ctea",
+        "body": [
+            "WITH base AS (",
+            "    SELECT",
+            "        ${1:colunas},",
+            "        ${2:medida} AS medida",
+            "    FROM ${3:tabela}",
+            "),",
+            "agregado AS (",
+            "    SELECT",
+            "        ${4:dimensoes},",
+            "        SUM(medida) AS soma_medida,",
+            "        AVG(medida) AS media_medida,",
+            "        COUNT(*) AS qtd",
+            "    FROM base",
+            "    GROUP BY ${4:dimensoes}",
+            ")",
+            "SELECT *",
+            "FROM agregado;"
+        ],
+        "description": "Modelo de CTE com agregações e métricas"
+    }
+}
