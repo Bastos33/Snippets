@@ -1,0 +1,1 @@
+--A base conglomera os dados brutos 
